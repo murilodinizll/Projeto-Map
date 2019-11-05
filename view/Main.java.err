@@ -1,4 +1,142 @@
-ERROR:138:class, interface, or enum expected
-ERROR:7:package br.edu.map.crud.dao does not exist
-ERROR:8:package br.edu.map.crud.model does not exist
-ERROR:9:package br.edu.map.crud.model does not exist
+package crud.view;
+
+/*
+ * Created by Murilo at 27/10/2019 - 17:32
+ */
+
+import crud.dao.ProdutoDAO;
+import crud.model.Especificacao;
+import crud.model.Produto;
+
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        
+        Scanner input = new Scanner(System.in);
+        String op;
+        ProdutoDAO dao = new ProdutoDAO();
+        Produto p;
+        Especificacao e;
+
+        do {
+
+            System.out.println("MENU");
+            System.out.println("(1) CADATRAR");
+            System.out.println("(2) EDITAR");
+            System.out.println("(3) EXCLUIR");
+            System.out.println("(4) CONSULTAR");
+            System.out.println("(0) SAIR");
+            
+            System.out.print(": ");
+
+            op = input.nextLine();
+
+            System.out.println("Opção: " + op);
+
+            if(op.equals("1")){
+
+                System.out.println("CADASTRAR");
+
+                p = new Produto();
+                p.setEspecificacao(new Especificacao());
+
+                System.out.print("Nome:");
+                p.setNome(input.nextLine());
+                
+                System.out.print("Preço:");
+                p.setPreco(Float.parseFloat(input.nextLine()));
+                
+                System.out.print("Fabricante:");
+                p.getEspecificacao().setFabricante(input.nextLine());
+                
+                System.out.print("Cor:");
+                p.getEspecificacao().setCor(input.nextLine());
+                
+                System.out.print("Sistema:");
+                p.getEspecificacao().setSistema(input.nextLine());
+                
+                System.out.print("Detalhes:");
+                p.getEspecificacao().setDetalhes(input.nextLine());
+
+
+                dao.inserir(p);
+
+                System.out.println("Produto Cadastrado");
+                
+            }
+            else if(op.equals("2")){
+                System.out.println("EDITAR");
+
+                System.out.print("codigo:");
+                int codigo = Integer.parseInt(input.nextLine());
+
+                p = dao.buscar(codigo);
+
+                if(p != null){
+                    System.out.println("Dados: " + p);
+                    System.out.print("nome:");
+                    String entrada = input.nextLine();
+                    
+                    p.setNome((entrada.equals("")) ? p.getNome() : entrada);
+
+                    System.out.print("preço:");
+                    entrada = input.nextLine();
+                    p.setPreco((entrada.equals("") ? p.getPreco() : Integer.parseInt(entrada)));
+
+                    System.out.print("fabricante:");
+                    entrada = input.nextLine();
+                    p.getEspecificacao().setFabricante((entrada.equals("") ? p.getEspecificacao().getFabricante() : entrada));
+
+                    System.out.print("cor:");
+                    entrada = input.nextLine();
+                    p.getEspecificacao().setCor(entrada.equals("") ? p.getEspecificacao().getCor() : entrada);
+
+                    System.out.print("sistema:");
+                    entrada = input.nextLine();
+                    p.getEspecificacao().setSistema(entrada.equals("") ? p.getEspecificacao().getSistema() : entrada);
+
+                    System.out.print("detalhes:");
+                    entrada = input.nextLine();
+                    p.getEspecificacao().setDetalhes(entrada.equals("") ? p.getEspecificacao().getDetalhes() : entrada);
+
+                    dao.editar(p);
+
+                    System.out.println("Registro salvo!");
+                }
+                else{
+                    System.out.println("Registro inexistente!");
+                }
+            }
+            else if(op.equals("3")){
+                System.out.println("EXCLUIR");
+
+
+                System.out.print("codigo: ");
+                int codigo = Integer.parseInt(input.nextLine());
+
+                p = dao.buscar(codigo);
+
+                if(p != null){
+                    dao.remover(p);
+                    System.out.println("excluido");
+                }
+                else{
+                    System.out.println("Registro inexistente");
+                }
+            }
+            else if(op.equals("4")){
+                System.out.println("CONSULTAR");
+
+
+                List<Produto> produtos = dao.listar();
+                for(Produto produto : produtos){
+                    System.out.println(produto);
+                }
+            }
+        } while (!op.equals("0"));
+    }
+
+
+}
