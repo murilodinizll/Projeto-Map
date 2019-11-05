@@ -1,0 +1,4 @@
+ERROR:138:class, interface, or enum expected
+ERROR:7:package br.edu.map.crud.dao does not exist
+ERROR:8:package br.edu.map.crud.model does not exist
+ERROR:9:package br.edu.map.crud.model does not exist
