@@ -1,12 +1,12 @@
-package crud.view;
+package br.edu.map.crud.view;
 
 /*
  * Created by Murilo at 27/10/2019 - 17:32
  */
 
-import crud.dao.ProdutoDAO;
-import crud.model.Especificacao;
-import crud.model.Produto;
+import br.edu.map.crud_produto.dao.ProdutoDAO;
+import br.edu.map.crud_produto.model.Especificacao;
+import br.edu.map.crud_produto.model.Produto;
 
 import java.util.List;
 import java.util.Scanner;
